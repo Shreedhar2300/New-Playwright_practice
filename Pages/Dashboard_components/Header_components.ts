@@ -32,6 +32,7 @@ export class Header{
     async profile()
     {
         await this.profilebutton.click();
+        return this;
     }
 
     async helpicon1()
@@ -54,6 +55,7 @@ export class Header{
     async clicklogout()
     {
         await this.logoutoption.click();
+        return this;
     }
 }
 

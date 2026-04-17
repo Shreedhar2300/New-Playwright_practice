@@ -1,15 +1,13 @@
-import { test,expect,Page } from "@playwright/test";
-import { Login } from "../Pages/Login";
-import { Header } from "../Pages/Dashboard_components/Header_components";
+import{test} from '../Pages/fixtures/baseFixture';
+import{expect} from '@playwright/test'
 
-test('successful login',async({page})=>{
-const login= new Login(page);
-await login.Launchurl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-await expect(page.getByRole("heading",{name:"Login"})).toBeVisible({timeout:10000});
-await login.Userlogin("Admin","admin123");
-await expect(page.getByRole("heading",{name:"Dashboard"})).toBeVisible();
-const logout= new Header(page);
-await logout.profile();
-await logout.clicklogout();
-
+test('successful login ',async({ pm })=>{
+await pm.userlogin().Launchurl("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
+await expect(pm.userlogin().page.getByRole("heading",{name:"Login"})).toBeVisible({timeout:10000});
+await pm.userlogin().Userlogin("Admin","admin123")
+await expect(pm.userlogin().page.getByRole("heading",{name:"Dashboard"})).toBeVisible({timeout:10000});
+const header=pm.dashboardpages().dashboardpageheaders();
+await header.profile();
+await header.clicklogout();
+await expect(pm.userlogin().page).toHaveURL(/login/);
 })
